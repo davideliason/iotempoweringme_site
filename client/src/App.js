@@ -9,7 +9,7 @@ class App extends Component {
         practiceCount : 0
       };
       this.handleNumClick = this.handleNumClick.bind(this);
-      this.handleGreenClick = this.handleGreenClick.bind(this);
+      this.handleGreenLEDClick = this.handleGreenLEDClick.bind(this);
 
     }
 
@@ -19,7 +19,7 @@ class App extends Component {
     }));
   }
 
-  handleGreenClick(){
+  handleGreenLEDClick(){
     this.setState(prevState => ({
       sendGreenLights: !prevState.sendGreenLights
     }));
@@ -33,7 +33,7 @@ class App extends Component {
         <SendGreenLightCommand sendGreenLights={this.state.sendGreenLights}/>
         <button onClick={this.handleNumClick}>Practice Count: {this.state.practiceCount}
         </button>
-        <button onClick={this.handleGreenClick}>Green Lights {this.state.sendGreenLights}
+        <button onClick={this.handleGreenLEDClick}>Green LED {this.state.sendGreenLights}
         </button>
       </div>
     );
@@ -43,10 +43,10 @@ class App extends Component {
 function SendGreenLightCommand(props){
   const yesSendGreenLight = props.sendGreenLights;
   if (yesSendGreenLight){
-    return (<p>green lights</p>)
+    return (<p>green LED lights up! :)</p>)
   }
   else{
-    return (<p>not green lights</p>)
+    return (<p>no green LED :(</p>)
   }
 }
 
