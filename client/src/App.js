@@ -6,15 +6,22 @@ class App extends Component {
       super(props);
       this.state = {
         sendGreenLights : false,
-        sendRedLights: false,
         practiceCount : 0
       };
-      this.handleClick = this.handleClick.bind(this);
+      this.handleNumClick = this.handleNumClick.bind(this);
+      this.handleGreenClick = this.handleGreenClick.bind(this);
+
     }
 
-   handleClick() {
+   handleNumClick() {
     this.setState(prevState => ({
       practiceCount: prevState.practiceCount + 1
+    }));
+  }
+
+  handleGreenClick(){
+    this.setState(prevState => ({
+      sendGreenLights: !prevState.sendGreenLights
     }));
   }
 
@@ -23,9 +30,11 @@ class App extends Component {
     return (
       <div className="App">
         <p>IoT Empowering Me</p>
-        <SendGreenLightCommand sendGreenLights="true"/>
-         <button onClick={this.handleClick}>Practice Count: {this.state.practiceCount}
-         </button>
+        <SendGreenLightCommand sendGreenLights={this.state.sendGreenLights}/>
+        <button onClick={this.handleNumClick}>Practice Count: {this.state.practiceCount}
+        </button>
+        <button onClick={this.handleGreenClick}>Green Lights {this.state.sendGreenLights}
+        </button>
       </div>
     );
   }
