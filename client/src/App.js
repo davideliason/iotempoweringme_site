@@ -4,50 +4,32 @@ import './App.css';
 class App extends Component {
   constructor(props) {
       super(props);
-      this.state = {clientData: "blue"};
+      this.state = {
+        sendGreenLights : false,
+        sendRedLights: false,
+        practiceCount : 0
+      };
       this.handleClick = this.handleClick.bind(this);
     }
 
    handleClick() {
     this.setState(prevState => ({
-      clientData: prevState.clientData + "+"
+      practiceCount: prevState.practiceCount + 1
     }));
   }
 
   render() {
+
     return (
       <div className="App">
         <p>IoT Empowering Me</p>
-        <SOSClient />
-         <button onClick={this.handleClick}>
+         <button onClick={this.handleClick}>Practice Count: {this.state.practiceCount}
          </button>
       </div>
     );
   }
 }
 
-class SOSClient extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {geolocation: "0"}
-  }
 
-  render(){
-    const geoNumber = this.state.geolocation;
-    const geoNumberText = "0" ? (
-        <h2>Zero!</h2>
-      ) : (
-        <h2> Not zero</h2>
-      )
-
-    return (
-      <div>
-          <p>{this.state.geolocation}</p>
-          <p>This is from state: {geoNumber}</p>
-          {geoNumberText}
-      </div>
-    )
-  }
-}
 
 export default App;
