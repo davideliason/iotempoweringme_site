@@ -20,7 +20,6 @@ class App extends Component {
         <p>IoT Empowering Me</p>
         <SOSClient />
          <button onClick={this.handleClick}>
-          {this.state.clientData}
          </button>
       </div>
     );
@@ -34,9 +33,18 @@ class SOSClient extends Component {
   }
 
   render(){
+    const geoNumber = this.state.geolocation;
+    const geoNumberText = "0" ? (
+        <h2>Zero!</h2>
+      ) : (
+        <h2> Not zero</h2>
+      )
+
     return (
       <div>
           <p>{this.state.geolocation}</p>
+          <p>This is from state: {geoNumber}</p>
+          {geoNumberText}
       </div>
     )
   }
