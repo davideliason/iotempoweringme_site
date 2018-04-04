@@ -18,12 +18,27 @@ class App extends Component {
     return (
       <div className="App">
         <p>IoT Empowering Me</p>
-        
+        <SOSClient />
          <button onClick={this.handleClick}>
           {this.state.clientData}
          </button>
       </div>
     );
+  }
+}
+
+class SOSClient extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {geolocation: "0"}
+  }
+
+  render(){
+    return (
+      <div>
+          <p>{this.state.geolocation}</p>
+      </div>
+    )
   }
 }
 
