@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
+import Background from './Background.js';
 
 class App extends Component {
   constructor(props) {
@@ -29,12 +30,13 @@ class App extends Component {
 
     return (
       <div className="App">
-        <p>IoT Empowering Me</p>
+        <h2>IoT Empowering Me</h2>
         <SendGreenLightCommand sendGreenLights={this.state.sendGreenLights}/>
         <button onClick={this.handleNumClick}>Practice Count: {this.state.practiceCount}
         </button>
         <button onClick={this.handleGreenLEDClick}>Green LED {this.state.sendGreenLights}
         </button>
+        <Background />
       </div>
     );
   }
