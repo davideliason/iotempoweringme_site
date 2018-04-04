@@ -23,12 +23,25 @@ class App extends Component {
     return (
       <div className="App">
         <p>IoT Empowering Me</p>
+        <SendGreenLightCommand sendGreenLights="true"/>
          <button onClick={this.handleClick}>Practice Count: {this.state.practiceCount}
          </button>
       </div>
     );
   }
 }
+
+function SendGreenLightCommand(props){
+  const yesSendGreenLight = props.sendGreenLights;
+  if (yesSendGreenLight){
+    return (<p>green lights</p>)
+  }
+  else{
+    return (<p>not green lights</p>)
+  }
+}
+
+
 
 
 
