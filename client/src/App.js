@@ -2,6 +2,18 @@ import React, { Component } from 'react';
 import './App.css';
 import Background from './Background.js';
 
+const publish_key =  'pub-c-c377ebaa-f828-40f5-8b64-9fef4ff4aeaa'; // your pub key
+const subscribe_key  = 'sub-c-8b9161d0-391a-11e8-9da7-9e748936d455'; // your sub key
+ 
+const pubnub = require('pubnub').init({                         
+  publish_key   : publish_key,
+  subscribe_key : subscribe_key,
+  ssl: true,
+  uuid: username
+});
+ 
+const channel = 'iotempoweringme';
+
 class App extends Component {
   constructor(props) {
       super(props);
@@ -27,6 +39,7 @@ class App extends Component {
   }
 
   render() {
+  
 
     return (
       <div className="App">
