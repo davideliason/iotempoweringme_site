@@ -28,6 +28,10 @@ class App extends Component {
                 message: 'hello world from react',
                 channel: 'channel1'
             });
+            this.pubnub.publish({
+                message: 'hello world again from react',
+                channel: 'channel1'
+            });
         });
     }
  
