@@ -4,5 +4,5 @@
 
 ## Mobile app website for bi-directional data to IoT product
 
-### A Cloud-enabled IoT + React/Native app device to empower lives.
-### Please visit [IoT Empowering Me](http://www.mysticmonklabs.com/iotempoweringme) for project description and details
+A Cloud-enabled IoT + React/Native app device to empower lives.
+Please visit [IoT Empowering Me](http://www.mysticmonklabs.com/iotempoweringme) for project description and details
