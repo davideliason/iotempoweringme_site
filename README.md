@@ -3,7 +3,7 @@
 ### Uses bi-directional data to Cellular Enabled Microcontroller 
 #### Built By: [David Eliason](http://www.davethemaker.com) working in collaboration with Vin Mongkoul ( built: March - May 18th, 2018 )
 
-###[Live App](http://www.mysticmonklabs.com/iotempoweringme)  
+### [Live App](http://www.mysticmonklabs.com/iotempoweringme)  
 
 IoT Empowering Me, an IoT / mobile-app product designed to help individuals live more empowered lives within the community.
 
