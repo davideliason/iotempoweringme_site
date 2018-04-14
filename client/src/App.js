@@ -6,6 +6,10 @@ import PubNubReact from 'pubnub-react';
 class App extends Component {
   constructor(props) {
         super(props);
+        this.state = {
+            msg : ""
+        };
+
         this.pubnub = new PubNubReact({
             publishKey: 'pub-c-c377ebaa-f828-40f5-8b64-9fef4ff4aeaa',
             subscribeKey: 'sub-c-8b9161d0-391a-11e8-9da7-9e748936d455'
@@ -21,6 +25,9 @@ class App extends Component {
  
         this.pubnub.getMessage('channel1', (msg) => {
             console.log(msg);
+            this.setState({
+                msg: msg.channel
+            })
         });
  
         this.pubnub.getStatus((st) => {
@@ -48,6 +55,7 @@ class App extends Component {
                 <ul>
                     {messages.map((m, index) => <li key={'message' + index}>{m.message}</li>)}
                 </ul>
+                <h3>{this.state.msg}</h3>
             </div>
         );
   }
