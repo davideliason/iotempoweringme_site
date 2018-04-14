@@ -7,7 +7,7 @@ class App extends Component {
   constructor(props) {
         super(props);
         this.state = {
-            msg : ""
+            msgs : []
         };
 
         this.pubnub = new PubNubReact({
@@ -26,7 +26,7 @@ class App extends Component {
         this.pubnub.getMessage('channel1', (msg) => {
             console.log(msg);
             this.setState({
-                msg: msg.channel
+                msgs: [...this.state.msgs,msg.timetoken]
             })
         });
  
@@ -55,7 +55,9 @@ class App extends Component {
                 <ul>
                     {messages.map((m, index) => <li key={'message' + index}>{m.message}</li>)}
                 </ul>
-                <h3>{this.state.msg}</h3>
+                <h3>{this.state.msgs[0]}</h3>
+                <h3>{this.state.msgs[1]}</h3>
+
             </div>
         );
   }
