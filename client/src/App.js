@@ -43,21 +43,19 @@ class App extends Component {
  
         this.pubnub.getStatus((st) => {
             this.pubnub.publish({
-                message: 'hello on channel 1 monday',
+                message: {
+                           gps : "here",
+                         },
                 channel: 'channel1'
             });
 
             this.pubnub.publish({
-                message: 'hello on channel 2 monday',
+                message: { 
+                            sos : "need help"
+                          },
                 channel: 'channel2'
             });
-
-            this.pubnub.publish({
-                message: 'bojour on channel 1 monday',
-                channel: 'channel1'
-            });
         });
-
     }
  
     componentWillUnmount() {
@@ -73,11 +71,11 @@ class App extends Component {
         return (
             <div>
                 <ul>
-                    {messagesChannel1.map((m, index) => <li key={'message' + index}>{m.message}</li>)}
+                    {messagesChannel1.map((m, index) => <li key={'message' + index}>{m.message.gps}</li>)}
                 </ul>
 
                 <ul>
-                    {messagesChannel2.map((m, index) => <li key={'message' + index}>{m.message}</li>)}
+                    {messagesChannel2.map((m, index) => <li key={'message' + index}>{m.message.sos}</li>)}
                 </ul>
            
 
