@@ -51,7 +51,7 @@ class App extends Component {
 
             this.pubnub.publish({
                 message: { 
-                            sos : "need help"
+                            msg : "need help"
                           },
                 channel: 'channel2'
             });
@@ -75,7 +75,7 @@ class App extends Component {
                 </ul>
 
                 <ul>
-                    {messagesChannel2.map((m, index) => <li key={'message' + index}>{m.message.sos}</li>)}
+                    {messagesChannel2.map((m, index) => <li key={'message' + index}>{m.message.msg}</li>)}
                 </ul>
            
 
