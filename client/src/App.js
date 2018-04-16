@@ -30,14 +30,12 @@ class App extends Component {
         // });
  
         this.pubnub.getMessage('channel1', (msg) => {
-            console.log(msg);
             this.setState({
                 msgsChannel1: [...this.state.msgsChannel1,msg.message]
             })
         });
 
         this.pubnub.getMessage('channel2', (msg) => {
-            console.log(msg);
             this.setState({
                 msgsChannel2: [...this.state.msgsChannel2,msg.message]
             })
@@ -52,6 +50,11 @@ class App extends Component {
             this.pubnub.publish({
                 message: 'hello on channel 2 monday',
                 channel: 'channel2'
+            });
+
+            this.pubnub.publish({
+                message: 'bojour on channel 1 monday',
+                channel: 'channel1'
             });
         });
 
@@ -77,8 +80,6 @@ class App extends Component {
                     {messagesChannel2.map((m, index) => <li key={'message' + index}>{m.message}</li>)}
                 </ul>
            
-                <h3>channel1: {this.state.msgsChannel1[0]}</h3>
-                <h3>channel2: {this.state.msgsChannel2[0]}</h3>
 
             </div>
         );
