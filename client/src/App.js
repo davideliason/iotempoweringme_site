@@ -32,14 +32,14 @@ class App extends Component {
         this.pubnub.getMessage('channel1', (msg) => {
             console.log(msg);
             this.setState({
-                msgsChannel1: [...this.state.msgsChannel1,msg.timetoken]
+                msgsChannel1: [...this.state.msgsChannel1,msg.message]
             })
         });
 
         this.pubnub.getMessage('channel2', (msg) => {
             console.log(msg);
             this.setState({
-                msgsChannel2: [...this.state.msgsChannel2,msg.timetoken]
+                msgsChannel2: [...this.state.msgsChannel2,msg.message]
             })
         });
  
@@ -53,14 +53,13 @@ class App extends Component {
                 message: 'hello on channel 2 monday',
                 channel: 'channel2'
             });
-
         });
 
     }
  
     componentWillUnmount() {
         this.pubnub.unsubscribe({
-            channels: ['channel1']
+            channels: ['channel1','channel2']
         });
     }
  
@@ -78,8 +77,7 @@ class App extends Component {
                     {messagesChannel2.map((m, index) => <li key={'message' + index}>{m.message}</li>)}
                 </ul>
            
-                <h3>{this.state.msgsChannel1[0]}</h3>
-                <h4> next: {this.state.msgsChannel1[1]}</h4>
+                <h3>channel1: {this.state.msgsChannel1[0]}</h3>
                 <h3>channel2: {this.state.msgsChannel2[0]}</h3>
 
             </div>
