@@ -8,7 +8,7 @@ class App extends Component {
         super(props);
         this.state = {
             msgsGPSCoordinates : [],
-            msgsChannel2 : []
+            msgsMessages : []
         };
 
         this.pubnub = new PubNubReact({
@@ -20,7 +20,7 @@ class App extends Component {
  
     componentWillMount() {
         this.pubnub.subscribe({
-            channels: ['gpscoordinates','channel2'],
+            channels: ['gpscoordinates','msgsMessages'],
             withPresence: true
         });
 
@@ -35,9 +35,9 @@ class App extends Component {
             })
         });
 
-        this.pubnub.getMessage('channel2', (msg) => {
+        this.pubnub.getMessage('msgsMessages', (msg) => {
             this.setState({
-                msgsChannel2: [...this.state.msgsChannel2,msg.message]
+                msgsMessages: [...this.state.msgsMessages,msg.message]
             })
         });
  
@@ -53,20 +53,20 @@ class App extends Component {
                 message: { 
                             msg : "need help"
                           },
-                channel: 'channel2'
+                channel: 'msgsMessages'
             });
         });
     }
  
     componentWillUnmount() {
         this.pubnub.unsubscribe({
-            channels: ['gpscoordinates','channel2']
+            channels: ['gpscoordinates','msgsMessages']
         });
     }
  
     render() {
         const msgsGPSCoordinates = this.pubnub.getMessage('gpscoordinates');
-        const messagesChannel2 = this.pubnub.getMessage('channel2');
+        const msgsMessages = this.pubnub.getMessage('msgsMessages');
 
         return (
             <div>
@@ -75,7 +75,7 @@ class App extends Component {
                 </ul>
 
                 <ul>
-                    {messagesChannel2.map((m, index) => <li key={'message' + index}>{m.message.msg}</li>)}
+                    {msgsMessages.map((m, index) => <li key={'message' + index}>{m.message.msg}</li>)}
                 </ul>
            
 
