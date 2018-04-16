@@ -7,7 +7,8 @@ class App extends Component {
   constructor(props) {
         super(props);
         this.state = {
-            msgs : []
+            msgsChannel1 : [],
+            msgsChannel2 : []
         };
 
         this.pubnub = new PubNubReact({
@@ -19,27 +20,42 @@ class App extends Component {
  
     componentWillMount() {
         this.pubnub.subscribe({
-            channels: ['channel1'],
+            channels: ['channel1','channel2'],
             withPresence: true
         });
+
+        //  this.pubnub.subscribe({
+        //     channels: ['channel2'],
+        //     withPresence: true
+        // });
  
         this.pubnub.getMessage('channel1', (msg) => {
             console.log(msg);
             this.setState({
-                msgs: [...this.state.msgs,msg.timetoken]
+                msgsChannel1: [...this.state.msgsChannel1,msg.timetoken]
+            })
+        });
+
+        this.pubnub.getMessage('channel2', (msg) => {
+            console.log(msg);
+            this.setState({
+                msgsChannel2: [...this.state.msgsChannel2,msg.timetoken]
             })
         });
  
         this.pubnub.getStatus((st) => {
             this.pubnub.publish({
-                message: 'hello world from react',
+                message: 'hello on channel 1 monday',
                 channel: 'channel1'
             });
+
             this.pubnub.publish({
-                message: 'hello world again from react',
-                channel: 'channel1'
+                message: 'hello on channel 2 monday',
+                channel: 'channel2'
             });
+
         });
+
     }
  
     componentWillUnmount() {
@@ -49,14 +65,22 @@ class App extends Component {
     }
  
     render() {
-        const messages = this.pubnub.getMessage('channel1');
+        const messagesChannel1 = this.pubnub.getMessage('channel1');
+        const messagesChannel2 = this.pubnub.getMessage('channel2');
+
         return (
             <div>
                 <ul>
-                    {messages.map((m, index) => <li key={'message' + index}>{m.message}</li>)}
+                    {messagesChannel1.map((m, index) => <li key={'message' + index}>{m.message}</li>)}
                 </ul>
-                <h3>{this.state.msgs[0]}</h3>
-                <h3>{this.state.msgs[1]}</h3>
+
+                <ul>
+                    {messagesChannel2.map((m, index) => <li key={'message' + index}>{m.message}</li>)}
+                </ul>
+           
+                <h3>{this.state.msgsChannel1[0]}</h3>
+                <h4> next: {this.state.msgsChannel1[1]}</h4>
+                <h3>channel2: {this.state.msgsChannel2[0]}</h3>
 
             </div>
         );
