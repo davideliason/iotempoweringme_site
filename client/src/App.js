@@ -8,7 +8,8 @@ class App extends Component {
         super(props);
         this.state = {
             msgsGPSCoordinates : [],
-            msgsMessages : []
+            msgsMessages : [],
+            msgsTimestamps : []
         };
 
         this.pubnub = new PubNubReact({
@@ -20,7 +21,7 @@ class App extends Component {
  
     componentWillMount() {
         this.pubnub.subscribe({
-            channels: ['gpscoordinates','msgsMessages'],
+            channels: ['msgsGPSCoordinates','msgsMessages','msgsTimestamps'],
             withPresence: true
         });
 
@@ -29,7 +30,7 @@ class App extends Component {
         //     withPresence: true
         // });
  
-        this.pubnub.getMessage('gpscoordinates', (msg) => {
+        this.pubnub.getMessage('msgsGPSCoordinates', (msg) => {
             this.setState({
                 msgsGPSCoordinates: [...this.state.msgsGPSCoordinates,msg.message]
             })
@@ -40,13 +41,19 @@ class App extends Component {
                 msgsMessages: [...this.state.msgsMessages,msg.message]
             })
         });
+
+        this.pubnub.getMessage('msgsTimestamps', (msg) => {
+            this.setState({
+                msgsTimestamps: [...this.state.msgsTimestamps,msg.message]
+            })
+        });
  
         this.pubnub.getStatus((st) => {
             this.pubnub.publish({
                 message: {
                            gps : "here",
                          },
-                channel: 'gpscoordinates'
+                channel: 'msgsGPSCoordinates'
             });
 
             this.pubnub.publish({
@@ -55,18 +62,27 @@ class App extends Component {
                           },
                 channel: 'msgsMessages'
             });
+
+             this.pubnub.publish({
+                message: { 
+                            timestamp : "right now"
+                          },
+                channel: 'msgsTimestamps'
+            });
         });
     }
  
     componentWillUnmount() {
         this.pubnub.unsubscribe({
-            channels: ['gpscoordinates','msgsMessages']
+            channels: ['msgsGPSCoordinates','msgsMessages','msgsTimestamps']
         });
     }
  
     render() {
-        const msgsGPSCoordinates = this.pubnub.getMessage('gpscoordinates');
+        const msgsGPSCoordinates = this.pubnub.getMessage('msgsGPSCoordinates');
         const msgsMessages = this.pubnub.getMessage('msgsMessages');
+        const msgsTimestamps = this.pubnub.getMessage('msgsTimestamps');
+
 
         return (
             <div>
@@ -76,6 +92,10 @@ class App extends Component {
 
                 <ul>
                     {msgsMessages.map((m, index) => <li key={'message' + index}>{m.message.msg}</li>)}
+                </ul>
+
+                <ul>
+                    {msgsTimestamps.map((m, index) => <li key={'message' + index}>{m.message.timestamp}</li>)}
                 </ul>
            
 
