@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import './App.css';
-import Background from './Background.js';
 import PubNubReact from 'pubnub-react';
 
 class App extends Component {
@@ -11,6 +10,8 @@ class App extends Component {
             msgsMessages : [],
             msgsTimestamps : []
         };
+
+        this.publishMessageToChannel = this.publishMessageToChannel.bind(this);
 
         this.pubnub = new PubNubReact({
             publishKey: 'pub-c-c377ebaa-f828-40f5-8b64-9fef4ff4aeaa',
@@ -33,7 +34,10 @@ class App extends Component {
         this.pubnub.getMessage('msgsGPSCoordinates', (msg) => {
             this.setState({
                 msgsGPSCoordinates: [...this.state.msgsGPSCoordinates,msg.message]
-            })
+            });
+            console.log('msgsGPSCoordinates', (msg) => {
+                console.log(msg);
+            });
         });
 
         this.pubnub.getMessage('msgsMessages', (msg) => {
@@ -47,7 +51,7 @@ class App extends Component {
                 msgsTimestamps: [...this.state.msgsTimestamps,msg.message]
             })
         });
- 
+
         this.pubnub.getStatus((st) => {
             this.pubnub.publish({
                 message: {
@@ -70,12 +74,17 @@ class App extends Component {
                 channel: 'msgsTimestamps'
             });
         });
+ 
     }
  
     componentWillUnmount() {
         this.pubnub.unsubscribe({
             channels: ['msgsGPSCoordinates','msgsMessages','msgsTimestamps']
         });
+    }
+
+    publishMessageToChannel(){
+            console.log("hello button was clicked")
     }
  
     render() {
@@ -97,6 +106,8 @@ class App extends Component {
                 <ul>
                     {msgsTimestamps.map((m, index) => <li key={'message' + index}>{m.message.timestamp}</li>)}
                 </ul>
+                <button onClick = {this.publishMessageToChannel}>click</button>
+
            
 
             </div>
