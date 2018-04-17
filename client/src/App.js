@@ -84,7 +84,14 @@ class App extends Component {
     }
 
     publishMessageToChannel(){
-            console.log("hello button was clicked")
+            console.log("hello button was clicked");
+            this.pubnub.publish({
+                message: {
+                           gps : "helloooooo gps",
+                         },
+                channel: 'msgsGPSCoordinates'
+            });
+        
     }
  
     render() {
