@@ -7,7 +7,7 @@ class App extends Component {
         super(props);
 
         this.state = {
-            Messages : ""
+            messages : ""
         };
 
         this.publishMessageToChannel = this.publishMessageToChannel.bind(this);
@@ -26,16 +26,11 @@ class App extends Component {
             withPresence: true
         });
 
-       
-
         this.pubnub.getMessage('messageChannel', (msg) => {
-            console.log(msg.message);
-            this.setState({ Messages: msg});
+            this.setState({ messages: msg});
         });
 
         this.pubnub.getStatus((st) => {
-            console.log(st);
-
             this.pubnub.publish({
                 message: "i am an original message",
                 channel: 'messageChannel'
@@ -59,10 +54,10 @@ class App extends Component {
 
  
     render() {
-
+            const messages = this.state.messages;
         return (
             <div>
-                {this.state.Messages.message}
+                {messages.message}
                 <button onClick={this.publishMessageToChannel}>click</button>
             </div>
         );
