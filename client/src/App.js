@@ -26,14 +26,9 @@ class App extends Component {
             withPresence: true
         });
 
-        //  this.pubnub.subscribe({
-        //     channels: ['channel2'],
-        //     withPresence: true
-        // });
- 
         this.pubnub.getMessage('msgsGPSCoordinates', (msg) => {
             this.setState({
-                msgsGPSCoordinates: [...this.state.msgsGPSCoordinates,msg.message]
+                msgsGPSCoordinates: [...this.state.msgsGPSCoordinates,msg.message.gps]
             });
             console.log('msgsGPSCoordinates', (msg) => {
                 console.log(msg);
@@ -42,13 +37,13 @@ class App extends Component {
 
         this.pubnub.getMessage('msgsMessages', (msg) => {
             this.setState({
-                msgsMessages: [...this.state.msgsMessages,msg.message]
+                msgsMessages: [...this.state.msgsMessages,msg.message.msg]
             })
         });
 
         this.pubnub.getMessage('msgsTimestamps', (msg) => {
             this.setState({
-                msgsTimestamps: [...this.state.msgsTimestamps,msg.message]
+                msgsTimestamps: [...this.state.msgsTimestamps,msg.message.timestamp]
             })
         });
 
@@ -87,9 +82,9 @@ class App extends Component {
             console.log("hello button was clicked");
             this.pubnub.publish({
                 message: {
-                           gps : "helloooooo gps",
+                           timestamp : Math.round(Math.random()*10000).toString(),
                          },
-                channel: 'msgsGPSCoordinates'
+                channel: 'msgsTimestamps'
             });
         
     }
