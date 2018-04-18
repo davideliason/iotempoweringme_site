@@ -7,8 +7,7 @@ class App extends Component {
         super(props);
 
         this.state = {
-            Messages : "",
-            message: ""
+            Messages : ""
         };
 
         this.publishMessageToChannel = this.publishMessageToChannel.bind(this);
@@ -38,7 +37,7 @@ class App extends Component {
             console.log(st);
 
             this.pubnub.publish({
-                message: "i am a message",
+                message: "i am an original message",
                 channel: 'messageChannel'
             });
         });
@@ -52,9 +51,10 @@ class App extends Component {
     }
 
     publishMessageToChannel(){
-        this.setState({
-            message: "new msg to state"
-        });
+         this.pubnub.publish({
+                message: "i am a new message",
+                channel: 'messageChannel'
+            });
     }
 
  
@@ -63,7 +63,6 @@ class App extends Component {
         return (
             <div>
                 {this.state.Messages.message}
-                <p> message: {this.state.message}</p>
                 <button onClick={this.publishMessageToChannel}>click</button>
             </div>
         );
