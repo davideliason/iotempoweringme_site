@@ -7,10 +7,11 @@ class App extends Component {
         super(props);
 
         this.state = {
-            Messages : [],
+            Messages : "",
+            message: ""
         };
 
-        // this.publishMessageToChannel = this.publishMessageToChannel.bind(this);
+        this.publishMessageToChannel = this.publishMessageToChannel.bind(this);
 
         this.pubnub = new PubNubReact({
             publishKey: 'pub-c-c377ebaa-f828-40f5-8b64-9fef4ff4aeaa',
@@ -29,16 +30,12 @@ class App extends Component {
        
 
         this.pubnub.getMessage('messageChannel', (msg) => {
-            // this.setState({
-            //     Messages: [...this.state.Messages,msg]
-            // })
-            console.log(msg);
+            console.log(msg.message);
+            this.setState({ Messages: msg});
         });
 
-       
-
         this.pubnub.getStatus((st) => {
-            console.log("st is:" + st);
+            console.log(st);
 
             this.pubnub.publish({
                 message: "i am a message",
@@ -54,12 +51,20 @@ class App extends Component {
         });
     }
 
+    publishMessageToChannel(){
+        this.setState({
+            message: "new msg to state"
+        });
+    }
+
  
     render() {
 
         return (
             <div>
-                hello
+                {this.state.Messages.message}
+                <p> message: {this.state.message}</p>
+                <button onClick={this.publishMessageToChannel}>click</button>
             </div>
         );
   }
