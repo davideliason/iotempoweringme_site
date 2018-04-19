@@ -71,7 +71,7 @@ class App extends Component {
                 <Row>
                     <Col xs={6} md={4}> {messages.message} 
                     </Col>
-                    <Col xs={6} md={4}> <button onClick={this.publishMessageToChannel}>click</button>
+                    <Col xs={6} md={4}> <Button bsStyle="primary" onClick={this.publishMessageToChannel}>click</Button>
                     </Col>
                 </Row>
               </Grid>
