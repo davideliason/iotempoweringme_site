@@ -8,10 +8,13 @@ class App extends Component {
         super(props);
 
         this.state = {
-            messages : ""
+            messages : "",
+            gpsLocation: ""
         };
 
         this.publishMessageToChannel = this.publishMessageToChannel.bind(this);
+        this.publishGPSToChannel = this.publishGPSToChannel.bind(this);
+
 
         this.pubnub = new PubNubReact({
             publishKey: 'pub-c-c377ebaa-f828-40f5-8b64-9fef4ff4aeaa',
@@ -26,7 +29,7 @@ class App extends Component {
         this.pubnub.getStatus();
 
         this.pubnub.subscribe({
-            channels: ['messageChannel'],
+            channels: ['messageChannel','gpsChannel'],
             withPresence: true
         });
 
@@ -34,13 +37,9 @@ class App extends Component {
             this.setState({ messages: msg});
         });
 
-        this.pubnub.getStatus((st) => {
-            this.pubnub.publish({
-                message: "i am an original message",
-                channel: 'messageChannel'
-            });
+        this.pubnub.getMessage('gpsChannel', (msg) => {
+            this.setState({ gpsLocation: msg});
         });
- 
     }
  
     componentWillUnmount() {
@@ -51,14 +50,22 @@ class App extends Component {
 
     publishMessageToChannel(){
          this.pubnub.publish({
-                message: "i am a new message" + Math.floor((Math.random() * 10) + 1) ,
+                message: Math.floor((Math.random() * 10) + 1) ,
                 channel: 'messageChannel'
+            });
+    }
+
+     publishGPSToChannel(){
+         this.pubnub.publish({
+                message: Math.floor((Math.random() * 10) + 1) ,
+                channel: 'gpsChannel'
             });
     }
 
  
     render() {
             const messages = this.state.messages;
+            const gps      = this.state.gpsLocation; 
         return (
             <div>
               <Grid>
@@ -71,7 +78,14 @@ class App extends Component {
                 <Row>
                     <Col xs={6} md={4}> {messages.message} 
                     </Col>
-                    <Col xs={6} md={4}> <Button bsStyle="primary" onClick={this.publishMessageToChannel}>click</Button>
+                    <Col xs={6} md={4}> {gps.message}
+                    </Col>
+                </Row>
+
+                <Row>
+                    <Col xs={6} md={4}> <Button bsStyle="primary" onClick={this.publishMessageToChannel}>new msg</Button>  
+                    </Col>
+                    <Col xs={6} md={4}> <Button bsStyle="primary" onClick={this.publishGPSToChannel}>new gps</Button>
                     </Col>
                 </Row>
               </Grid>
