@@ -21,6 +21,9 @@ class App extends Component {
     }
  
     componentWillMount() {
+
+        this.pubnub.getStatus();
+
         this.pubnub.subscribe({
             channels: ['messageChannel'],
             withPresence: true
@@ -47,7 +50,7 @@ class App extends Component {
 
     publishMessageToChannel(){
          this.pubnub.publish({
-                message: "i am a new message",
+                message: "i am a new message" + Math.floor((Math.random() * 10) + 1) ,
                 channel: 'messageChannel'
             });
     }
@@ -57,6 +60,7 @@ class App extends Component {
             const messages = this.state.messages;
         return (
             <div>
+                <h3> Client Messages</h3>
                 {messages.message}
                 <button onClick={this.publishMessageToChannel}>click</button>
             </div>
