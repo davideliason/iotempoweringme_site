@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import PubNubReact from 'pubnub-react';
 
+import { Button, Grid, Row, Col } from 'react-bootstrap';
 class App extends Component {
   constructor(props) {
         super(props);
@@ -60,9 +61,20 @@ class App extends Component {
             const messages = this.state.messages;
         return (
             <div>
-                <h3> Client Messages</h3>
-                {messages.message}
-                <button onClick={this.publishMessageToChannel}>click</button>
+              <Grid>
+                <Row>
+                    <Col xs={6} md={4}> Messages 
+                    </Col>
+                    <Col xs={6} md={4}> Location
+                    </Col>
+                </Row>
+                <Row>
+                    <Col xs={6} md={4}> {messages.message} 
+                    </Col>
+                    <Col xs={6} md={4}> <button onClick={this.publishMessageToChannel}>click</button>
+                    </Col>
+                </Row>
+              </Grid>
             </div>
         );
   }
